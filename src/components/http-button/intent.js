@@ -5,5 +5,4 @@ const intent = ({DOM}) => {
     .events('click')
     .mapTo(true)
 }
-
 export default intent

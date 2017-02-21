@@ -20,5 +20,4 @@ const HttpButton = (sources, props) => {
     clicked$ : click$
   }
 }
-
 export default HttpButton

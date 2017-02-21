@@ -34,5 +34,4 @@ const model = ({
     .map(([text, transition]) => ({text, transition, className}))
   return state$
 }
-
 export default model

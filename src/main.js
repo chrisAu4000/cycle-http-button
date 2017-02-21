@@ -21,7 +21,7 @@ function main(sources) {
     loading$:  xs.merge(xs.of(false), loadProxy$),
     duration$: xs.of(duration),
     // className: 'hello',
-    // easing:    tween.power2.easeIn
+    easing:    tween.power2.easeIn
   }
   const httpButton = HttpButton(sources, props)
 

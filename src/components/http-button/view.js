@@ -55,5 +55,4 @@ const view = (state$) => {
     ])
   })
 }
-
 export default view
