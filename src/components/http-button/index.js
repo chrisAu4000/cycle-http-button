@@ -15,15 +15,18 @@ import view from './view'
  *    DOM :: vtree,
  *    clicked$ :: Stream
  * }
- * @example
+ * @example <caption>app.js</caption>
  * import {run} from '@cycle/xstream-run'
  * import {makeDOMDriver} from '@cycle/dom'
- * function main (sources) {
- *   const duration = 250
- *   const textProxy$ = xs.create()
- *   const resetTextProxy$ = xs.create()
- *   const loadProxy$ = xs.create()
+ * import xs from 'xstream'
+ * import delay from 'xstream/extra/delay'
+ * import tween from 'xstream/extra/tween'
  *
+ * function main (sources) {
+ *   const duration        = 250
+ *   const textProxy$      = xs.create()
+ *   const resetTextProxy$ = xs.create()
+ *   const loadProxy$      = xs.create()
  *   const props = {
  *     text$:     xs.merge(xs.of('Signin'), textProxy$, resetTextProxy$),
  *     loading$:  xs.merge(xs.of(false), loadProxy$),
@@ -31,7 +34,6 @@ import view from './view'
  *     easing:    tween.power2.easeIn
  *   }
  *   const httpButton = HttpButton(sources, props)
- *
  *   textProxy$.imitate(httpButton.clicked$.mapTo('Loading ...'))
  *   resetTextProxy$.imitate(httpButton.clicked$.mapTo('Signin').compose(delay(4 * duration)))
  *   loadProxy$.imitate(httpButton.clicked$.mapTo(false).compose(delay(4 * duration)))
@@ -39,10 +41,28 @@ import view from './view'
  *     DOM: httpButton.DOM
  *   }
  * }
+ *
  * const drivers = {
  *   DOM: makeDOMDriver('#app')
  * }
+ *
  * run(main, drivers)
+ *
+ * @example <caption>index.html</caption>
+ * <!DOCTYPE html>
+ * <html lang="en">
+ * <head>
+ *   <meta charset="utf-8">
+ *   <meta name="viewport" content="width=device-width, initial-scale=1">
+ *   <link rel="icon" href="icon.ico" sizes="16x16" type="image/vnd.microsoft.icon">
+ *   <link rel="stylesheet" href="/build/main.css">
+ *   <title>Title</title>
+ * </head>
+ * <body>
+ *   <div id="app"></div>
+ * </body>
+ * <script src="app.js"></script>
+ * </html>
 **/
 const HttpButton = (sources, props) => {
   const click$ = intent(sources)
