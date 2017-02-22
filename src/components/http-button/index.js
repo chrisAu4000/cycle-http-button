@@ -2,7 +2,7 @@ import intent from './intent'
 import model from './model'
 import view from './view'
 /**
- * Displays a Button that is able to be showen as button or as loading spinner.
+ * Displays a Button that is able to be shown as button or as loading spinner.
  * @param {Object} sources - Source streams.
  * @param {DOMSource} sources.DOM - DOMDriver to select elements and invoke events.
  * @param {Object} props - Contains the initial state of the HttpButton.

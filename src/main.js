@@ -20,7 +20,6 @@ function main(sources) {
     text$:     xs.merge(xs.of('Signin'), textProxy$, resetTextProxy$),
     loading$:  xs.merge(xs.of(false), loadProxy$),
     duration$: xs.of(duration),
-    // className: 'hello',
     easing:    tween.power2.easeIn
   }
   const httpButton = HttpButton(sources, props)
