@@ -1,8 +1,8 @@
 {
-  "name": "cycle-boilerplate",
+  "name": "cycle-http-button",
   "version": "0.0.1",
-  "description": "a startingpoint to create onepage-applications with cycle.js and xstreams.",
-  "main": "index.js",
+  "description": "button with loading ability to use with cycle.js and xstreams.",
+  "main": "src/app.js",
   "directories": {
     "test": "test"
   },
@@ -23,18 +23,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://ch_auer@bitbucket.org/ch_auer/cycle-boilerplate.git"
+    "url": "git+https://github.com/chrisAu4000/cycle-http-button.git"
   },
   "keywords": [
     "cycle.js",
     "boilerplate",
     "xstream",
     "functional",
-    "reactive"
+    "reactive",
+    "component"
   ],
   "author": "Christian Auer",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/ch_auer/cycle-boilerplate#readme",
+  "homepage": "https://github.com/chrisAu4000/cycle-http-button.git#readme",
   "devDependencies": {
     "babel-cli": "^6.14.0",
     "babel-preset-es2015": "^6.14.0",
