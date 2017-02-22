@@ -11,6 +11,10 @@ import view from './view'
  * @param {Stream} props.duration$ - Transition duration.
  * @param {String} [props.className] - Additional className.
  * @param {Function} [props.easing = linear ease] - xstream/extra/tween easing function.
+ * @returns {Object} {
+ *    DOM :: vtree,
+ *    clicked$ :: Stream
+ * }
 **/
 const HttpButton = (sources, props) => {
   const click$ = intent(sources)
