@@ -15,6 +15,34 @@ import view from './view'
  *    DOM :: vtree,
  *    clicked$ :: Stream
  * }
+ * @example
+ * import {run} from '@cycle/xstream-run'
+ * import {makeDOMDriver} from '@cycle/dom'
+ * function main (sources) {
+ *   const duration = 250
+ *   const textProxy$ = xs.create()
+ *   const resetTextProxy$ = xs.create()
+ *   const loadProxy$ = xs.create()
+ *
+ *   const props = {
+ *     text$:     xs.merge(xs.of('Signin'), textProxy$, resetTextProxy$),
+ *     loading$:  xs.merge(xs.of(false), loadProxy$),
+ *     duration$: xs.of(duration),
+ *     easing:    tween.power2.easeIn
+ *   }
+ *   const httpButton = HttpButton(sources, props)
+ *
+ *   textProxy$.imitate(httpButton.clicked$.mapTo('Loading ...'))
+ *   resetTextProxy$.imitate(httpButton.clicked$.mapTo('Signin').compose(delay(4 * duration)))
+ *   loadProxy$.imitate(httpButton.clicked$.mapTo(false).compose(delay(4 * duration)))
+ *   return {
+ *     DOM: httpButton.DOM
+ *   }
+ * }
+ * const drivers = {
+ *   DOM: makeDOMDriver('#app')
+ * }
+ * run(main, drivers)
 **/
 const HttpButton = (sources, props) => {
   const click$ = intent(sources)

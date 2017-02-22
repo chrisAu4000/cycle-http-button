@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register test/*.js",
-    "doc": "jsdoc2md ./src/components/http-button/index.js >> README.md",
+    "doc": "jsdoc2md ./src/components/http-button/index.js > README.md",
     "clean": "rimraf build",
     "budo": "budo src/app.js -l -o",
     "mkdir:build": "mkdirp build",
