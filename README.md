@@ -2,6 +2,10 @@
 
 ## HttpButton(sources, props) ⇒ <code>Object</code>
 Displays a Button that is able to be shown as button or as loading spinner.
+Instalation:
+```bash
+$ npm install --save git+https://github.com/chrisAu4000/cycle-http-button.git
+```
 
 **Kind**: global function  
 **Returns**: <code>Object</code> - {
@@ -53,21 +57,4 @@ const drivers = {
 }
 
 run(main, drivers)
-```
-**Example** *(index.html)*  
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="icon.ico" sizes="16x16" type="image/vnd.microsoft.icon">
-  <link rel="stylesheet" href="/build/main.css">
-  <title>Title</title>
-</head>
-<body>
-  <div id="app"></div>
-</body>
-<script src="app.js"></script>
-</html>
 ```

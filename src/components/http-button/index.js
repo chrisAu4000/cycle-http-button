@@ -3,6 +3,10 @@ import model from './model'
 import view from './view'
 /**
  * Displays a Button that is able to be shown as button or as loading spinner.
+ * Instalation:
+ * ```bash
+ * $ npm install --save git+https://github.com/chrisAu4000/cycle-http-button.git
+ * ```
  * @param {Object} sources - Source streams.
  * @param {DOMSource} sources.DOM - DOMDriver to select elements and invoke events.
  * @param {Object} props - Contains the initial state of the HttpButton.
@@ -47,22 +51,6 @@ import view from './view'
  * }
  *
  * run(main, drivers)
- *
- * @example <caption>index.html</caption>
- * <!DOCTYPE html>
- * <html lang="en">
- * <head>
- *   <meta charset="utf-8">
- *   <meta name="viewport" content="width=device-width, initial-scale=1">
- *   <link rel="icon" href="icon.ico" sizes="16x16" type="image/vnd.microsoft.icon">
- *   <link rel="stylesheet" href="/build/main.css">
- *   <title>Title</title>
- * </head>
- * <body>
- *   <div id="app"></div>
- * </body>
- * <script src="app.js"></script>
- * </html>
 **/
 const HttpButton = (sources, props) => {
   const click$ = intent(sources)
