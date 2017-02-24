@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  font-family: sans-serif;
+  button {
+    border: none;
+    outline: none;
+  }
+  #app {
+    display: flex;
+    justify-content: center;
+  }
+}
+@import "http-button-default"
