@@ -1,4 +1,4 @@
-import {div, button, h} from '@cycle/dom'
+import {div, button, h, span} from '@cycle/dom'
 import {compose, curry} from 'ramda'
 
 const reverse = transition => Math.abs(transition - 100)
@@ -9,9 +9,11 @@ const after = curry((fn, def, x, transition) => transition < x ? fn(transition) 
 
 const view = (state$) => {
   return state$.map(({text, transition, className}) => {
+    console.log(text, transition, className)
     const width  =  5 + transition * 0.95
     const radius = 50 - transition * 0.47
     const opacityButton = after((t) => t / 20, 1, 20, transition)
+    const opacityText = after((t) => t / 50, 1, 50, transition)
     const opacitySpinner = after((t) => t / 90, 1, 90, reverse(transition))
     const height = 0.4 * transition
     const cName = className ?  '.' + className : ''
@@ -27,7 +29,11 @@ const view = (state$) => {
           'opacity': opacityButton,
         }
       },[
-        text
+        span('.text', {
+          style: {
+            opacity: opacityText
+          }
+        }, [text])
       ]),
       h('svg', {
         attrs: {

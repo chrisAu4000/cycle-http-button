@@ -1,37 +1,40 @@
-import {prop, curry} from 'ramda'
+import {prop, curry, compose} from 'ramda'
 import xs from 'xstream'
 import tween from 'xstream/extra/tween'
 import concat from 'xstream/extra/concat'
 import sampleCombine from 'xstream/extra/sampleCombine'
 
-const model = ({
-  text$,
-  loading$,
-  duration$,
-  className,
-  easing
-  }, {click$}) => {
-  const tweenOpts = curry((duration, from, to) => ({
-    from: from,
-    to: to,
-    ease: easing || tween.linear.ease,
-    duration: duration,
-  }))
-  const tweenOpt$ = duration$.map(tweenOpts)
-  const initial$ = loading$
-    .take(1)
-    .map(isLoading => isLoading ? 0 : 100)
-  const isLoading$ = xs.merge(loading$, click$.mapTo(true))
-  const transition$ = concat(initial$, isLoading$
-    .compose(sampleCombine(tweenOpt$))
-    .map(([isLoading, tweenOpts]) =>
-      isLoading ?
-      tween(tweenOpts(100, 0)) :
-      tween(tweenOpts(0, 100))
+const toState = curry((props, transition) => ({
+  text: props.text,
+  className: props.className || '',
+  transition: transition
+}))
+
+const staticTransition = props => props.loading ? 0 : 100
+
+const tweenOpts = props => props.loading ?
+  {from: 100, to: 0, duration: props.duration, ease: props.easing} :
+  {from: 0, to: 100, duration: props.duration, ease: props.easing}
+
+const model = (props$, {click$}) => {
+  const onProps$ = concat(
+    props$
+      .take(1)
+      .map(props => toState(props, staticTransition(props))),
+    props$
+      .map(props => tween(tweenOpts(props))
+        .map(toState(props))
+      )
+      .flatten()
+  )
+  const onClick$ = click$
+    .mapTo(true)
+    .compose(sampleCombine(props$))
+    .map(([loading, props]) => Object.assign({}, props, {loading}))
+    .map(props => tween(tweenOpts(props))
+      .map(toState(props))
     )
-    .flatten())
-  const state$ = xs.combine(text$, transition$)
-    .map(([text, transition]) => ({text, transition, className}))
-  return state$
+    .flatten()
+  return xs.merge(onProps$, onClick$)
 }
 export default model

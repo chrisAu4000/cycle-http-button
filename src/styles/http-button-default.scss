@@ -11,8 +11,10 @@ $duration: 1.4s;
     opacity: 0;
     height: 40px;
     background-color: #58E883;
-    font-size: 20px;
-    color: #2A4232;
+    .text {
+      color: #2A4232;
+      font-size: 20px;
+    }
   }
   .spinner {
     @keyframes rotator {
@@ -54,5 +56,5 @@ $duration: 1.4s;
         colors ($duration*4) ease-in-out infinite;
     }
   }
-  
+
 }
