@@ -17,40 +17,43 @@ $ npm install --save git+https://github.com/chrisAu4000/cycle-http-button.git
 | --- | --- | --- | --- |
 | sources | <code>Object</code> |  | Source streams. |
 | sources.DOM | <code>DOMSource</code> |  | DOMDriver to select elements and invoke events. |
-| props | <code>Object</code> |  | Contains the initial state of the HttpButton. |
-| props.text$ | <code>Stream</code> |  | Stream of Strings that will be displayed as button text. |
-| props.loading$ | <code>Stream</code> |  | Stream of Booleans true if button is in loading state. |
-| props.duration$ | <code>Stream</code> |  | Transition duration. |
+| props | <code>Stream</code> |  | Contains the initial state of the HttpButton. |
+| props.text | <code>String</code> |  | Stream of Strings that will be displayed as button text. |
+| props.loading | <code>Boolean</code> |  | Stream of Booleans true if button is in loading state. |
+| props.duration | <code>Number</code> |  | Transition duration. |
 | [props.className] | <code>String</code> |  | Additional className. |
 | [props.easing] | <code>function</code> | <code>linear ease</code> | xstream/extra/tween easing function. |
 
 **Example** *(app.js)*  
 ```js
-import {run} from '@cycle/xstream-run'
-import {makeDOMDriver} from '@cycle/dom'
 import xs from 'xstream'
 import delay from 'xstream/extra/delay'
 import tween from 'xstream/extra/tween'
+import concat from 'xstream/extra/concat'
+import fromDiagram from 'xstream/extra/fromDiagram'
+import HttpButton from './components/http-button'
 
-function main (sources) {
-  const duration        = 250
-  const textProxy$      = xs.create()
-  const resetTextProxy$ = xs.create()
-  const loadProxy$      = xs.create()
-  const props = {
-    text$:     xs.merge(xs.of('Signin'), textProxy$, resetTextProxy$),
-    loading$:  xs.merge(xs.of(false), loadProxy$),
-    duration$: xs.of(duration),
-    easing:    tween.power2.easeIn
+function main(sources) {
+  const duration = 250
+  const resetProxy$ = xs.create()
+  const props1 = {
+    text:     'Signin',
+    loading:  false,
+    duration: duration,
+    className:'test',
+    easing:   tween.power2.easeOut
   }
-  const httpButton = HttpButton(sources, props)
-  textProxy$.imitate(httpButton.clicked$.mapTo('Loading ...'))
-  resetTextProxy$.imitate(httpButton.clicked$.mapTo('Signin').compose(delay(4 * duration)))
-  loadProxy$.imitate(httpButton.clicked$.mapTo(false).compose(delay(4 * duration)))
-  return {
-    DOM: httpButton.DOM
+  const props2 = {
+    text:     'Loading...',
+    loading:  true,
+    duration: duration,
+    easing:   tween.power2.easeIn
   }
-}
+  const props$ = fromDiagram('-a--------------------------------------------b--------------------------------------------a-')
+    .map(x => x === 'a' ? props1 : props2)
+    .compose(delay(1000))
+  const {DOM, clicked$} = HttpButton(sources, xs.merge(props$, resetProxy$))
+  resetProxy$.imitate(clicked$.mapTo(props1).compose(delay(4 * duration)))
 
 const drivers = {
   DOM: makeDOMDriver('#app')

@@ -9,7 +9,6 @@ const after = curry((fn, def, x, transition) => transition < x ? fn(transition) 
 
 const view = (state$) => {
   return state$.map(({text, transition, className}) => {
-    console.log(text, transition, className)
     const width  =  5 + transition * 0.95
     const radius = 50 - transition * 0.47
     const opacityButton = after((t) => t / 20, 1, 20, transition)
